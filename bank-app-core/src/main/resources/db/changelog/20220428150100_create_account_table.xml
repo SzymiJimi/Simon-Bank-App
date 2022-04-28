@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="20220428150100" author="sjarzabek">
+        <createTable tableName="account">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="customer_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="product_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="balance" type="decimal">
+                <constraints nullable="false" />
+            </column>
+            <column name="display_name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="opening_date" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="closing_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+            <column name="denomination" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="20220428165400" author="sjarzabek">
+        <addForeignKeyConstraint baseColumnNames="from_account"
+                                 baseTableName="transfer"
+                                 constraintName="fk_transfer_from_account_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="account"/>
+        <addForeignKeyConstraint baseColumnNames="to_account"
+                                 baseTableName="transfer"
+                                 constraintName="fk_transfer_to_account_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="account"/>
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="account"
+                                 constraintName="fk_account_product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+
+        <addForeignKeyConstraint baseColumnNames="customer_id"
+                                 baseTableName="account"
+                                 constraintName="fk_account_customer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="customer"/>
+    </changeSet>
+</databaseChangeLog>
