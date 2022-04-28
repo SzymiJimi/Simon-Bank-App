@@ -1,0 +1,11 @@
+id;name;surname;date_of_birth
+1;Garrick;Schowalter;PARSEDATETIME('1985/10/05','yyyy/MM/dd')
+2;Charley;Legros;PARSEDATETIME('1965/05/06','yyyy/MM/dd')
+3;Chasity;Mayert;PARSEDATETIME('1995/03/07','yyyy/MM/dd')
+4;Katelyn;Hilll;PARSEDATETIME('1975/10/08','yyyy/MM/dd')
+5;Brenda;Greenholt;PARSEDATETIME('1955/10/09','yyyy/MM/dd')
+6;Ron;Legros;PARSEDATETIME('2003/09/10','yyyy/MM/dd')
+7;Wilma;Bins;PARSEDATETIME('1999/11/11','yyyy/MM/dd')
+8;Alicia;McKenzie;PARSEDATETIME('1990/12/12','yyyy/MM/dd')
+9;Margret;Wehner;PARSEDATETIME('1980/01/13','yyyy/MM/dd')
+10;Murphy;Wunsch;PARSEDATETIME('1989/04/14','yyyy/MM/dd')
