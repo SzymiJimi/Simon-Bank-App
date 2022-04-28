@@ -1,0 +1,19 @@
+version : '3.8'
+services:
+  web:
+    build:
+      dockerfile: C:/Projects/BankAPp/Simon-Bank-App/Dockerfile-ui-dev
+      context: ./bank-app-ui
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./bank-app-ui/src:/usr/src/app/src
+      - ./bank-app-ui/node_modules:/usr/src/app/node_modules
+  api:
+    image: 'bank-app-core'
+    ports:
+      - "8080:8080"
+    tty: true
+    volumes:
+      - ./bank-app-core/target/:/usr/src/app/src
+      - ./bank-app-ui/node_modules:/usr/src/app/node_modules

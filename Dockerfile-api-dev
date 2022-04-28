@@ -1,0 +1,6 @@
+FROM adoptopenjdk/openjdk13
+
+WORKDIR /usr/app
+COPY spring-app/bank-app-core.jar bank-app-core.jar
+ENTRYPOINT ["java", "-jar","bank-app-core.jar"]
+EXPOSE 8080
