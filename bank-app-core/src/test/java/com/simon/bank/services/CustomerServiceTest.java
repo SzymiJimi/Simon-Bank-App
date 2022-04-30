@@ -2,6 +2,7 @@ package com.simon.bank.services;
 
 import com.simon.bank.domain.Customer;
 import com.simon.bank.repository.CustomerRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,7 +11,6 @@ import org.mockito.Mock;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
@@ -37,7 +37,7 @@ class CustomerServiceTest {
         List<Customer> result = this.customerService.findAll();
 
         //then
-        assertEquals(customers, result);
+        Assertions.assertEquals(customers, result);
     }
 
     List<Customer> createCustomers(){

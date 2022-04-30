@@ -42,11 +42,13 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatDividerModule} from "@angular/material/divider";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {OpenAccountDialog} from "./open-account-dialog/open-account.component";
+import {TransactionsDialog} from "./transactions-dialog/transactions-dialog.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    OpenAccountDialog
+    OpenAccountDialog,
+    TransactionsDialog,
   ],
   imports: [
     CommonModule,
