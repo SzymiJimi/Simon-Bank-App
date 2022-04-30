@@ -1,8 +1,6 @@
 package com.simon.bank.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,12 +9,17 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Transfer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
+    private String type;
+
     private BigDecimal amount;
 
     @ManyToOne
@@ -30,6 +33,7 @@ public class Transfer {
     public String toString() {
         return "Transfer{" +
                 "id=" + id +
+                ", type=" + type +
                 ", amount=" + amount +
                 ", from_account=" + fromAccount +
                 ", to_account=" + toAccount +

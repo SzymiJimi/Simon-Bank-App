@@ -10,10 +10,11 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-public class TestController {
+public class CustomerController {
+    private final CustomerService customerService;
 
-
-
-
-
+    @GetMapping(value = "/customers")
+    public List<Customer> getCustomers(){
+        return this.customerService.findAll();
+    }
 }
