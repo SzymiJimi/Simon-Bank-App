@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Open new current account</h1>
+<div mat-dialog-content>
+  <p>You are opening account for: <span style="font-weight: bold">{{data.name + " " + data.surname }}</span></p>
+  <p>Enter initial credit</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Initial credit</mat-label>
+    <input matInput [(ngModel)]="initialCredit">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button [mat-dialog-close]="initialCredit" cdkFocusInitial>Ok</button>
+</div>
