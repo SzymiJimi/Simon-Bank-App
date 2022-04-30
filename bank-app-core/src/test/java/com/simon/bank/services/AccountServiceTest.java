@@ -8,17 +8,22 @@ import com.simon.bank.domain.enums.AccountStatus;
 import com.simon.bank.repository.AccountRepository;
 import com.simon.bank.repository.CustomerRepository;
 import com.simon.bank.repository.ProductRepository;
+import com.simon.bank.services.dto.AccountDTO;
 import com.simon.bank.services.dto.OpenAccountDTO;
+import com.simon.bank.services.exception.AccountNotCreatedException;
 import com.simon.bank.services.exception.CustomerNotFoundException;
 import com.simon.bank.services.exception.ProductNotFoundException;
-import liquibase.pro.packaged.P;
-import org.aspectj.apache.bcel.classfile.Module;
+import com.simon.bank.services.exception.RequestDataNullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import javax.crypto.CipherInputStream;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -78,6 +83,67 @@ class AccountServiceTest {
         verify(customerRepository, times(1)).findById(eq(customerId));
         verify(productRepository, times(1)).findFirstByName(any(String.class));
         verify(repository, times(1)).save(any(Account.class));
+    }
+
+    @Test
+    void testOpeningCurrentAccountAndSendingTransfer_whenExceptionIsThrown() {
+        //given
+        BigDecimal initialCredit = BigDecimal.valueOf(200.50);
+        Long customerId = 2L;
+        when(customerRepository.findById(any(Long.class))).thenThrow(new RuntimeException("Exception"));
+
+        //when then
+        assertThrows(AccountNotCreatedException.class,
+                () -> this.accountService.openNewCurrentAccountAndSendTransfer(new OpenAccountDTO(customerId, initialCredit)));
+    }
+
+    @Test
+    void testCheckRequestData_whenCustomerIsNull() {
+        //given
+        BigDecimal initialCredit = BigDecimal.valueOf(200.50);
+        Long customerId = null;
+
+        //when then
+        assertThrows(RequestDataNullException.class,
+                () -> this.accountService.checkRequestData(new OpenAccountDTO(customerId, initialCredit)));
+    }
+
+    @Test
+    void testCheckRequestData_whenCreditIsNull() {
+        //given
+        BigDecimal initialCredit = null;
+        Long customerId = 2L;
+
+        //when then
+        assertThrows(RequestDataNullException.class,
+                () -> this.accountService.checkRequestData(new OpenAccountDTO(customerId, initialCredit)));
+    }
+
+    @Test
+    void testGetAccounts_whenAccountsExists_shouldTransformToDTO(){
+        //given
+        Account account = createAccount();
+        when(repository.findAll()).thenReturn(List.of(account));
+        when(transferService.findAllByAccountId(any(Account.class))).thenReturn(Collections.emptyList());
+
+        //when
+        this.accountService.getAccounts();
+
+        //then
+        verify(transferService, times(1)).findAllByAccountId(any(Account.class));
+    }
+
+    @Test
+    void testGetAccounts_whenAccountsNotExists_shouldNotTransformToDTO(){
+        //given
+        Account account = createAccount();
+        when(repository.findAll()).thenReturn(Collections.emptyList());
+
+        //when
+        this.accountService.getAccounts();
+
+        //then
+        verify(transferService, times(0)).findAllByAccountId(any(Account.class));
     }
 
     @Test
@@ -179,6 +245,22 @@ class AccountServiceTest {
 
     }
 
+    @Test
+    void testTransformToDTO(){
+        //given
+        Account account = createAccount();
+        when(transferService.findAllByAccountId(any(Account.class))).thenReturn(Collections.emptyList());
+
+        //when
+        AccountDTO result = this.accountService.transformToDTO(account);
+
+        //then
+        assertEquals(account.getId(), result.getId());
+        assertEquals(account.getCustomer(), result.getCustomer());
+        assertEquals(account.getBalance(), result.getBalance());
+        assertEquals(0, result.getTransfers().size());
+    }
+
     private OpenAccountDTO mockBeanCalls(Long customerId, BigDecimal initialCredit){
         String productName = "current account";
         Customer customerToReturn = Customer.builder().id(customerId).build();
@@ -188,5 +270,13 @@ class AccountServiceTest {
         when(repository.save(any(Account.class))).thenReturn(new Account());
 
         return new OpenAccountDTO(customerId, initialCredit);
+    }
+
+    private Account createAccount(){
+        return Account.builder()
+                .id(1L)
+                .balance(BigDecimal.valueOf(2.0))
+                .customer(new Customer())
+                .build();
     }
 }
