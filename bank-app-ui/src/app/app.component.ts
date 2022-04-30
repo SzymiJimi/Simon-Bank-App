@@ -87,11 +87,14 @@ export class AppComponent implements OnInit {
   }
 
   openSuccessSnackBar() {
-    this._snackBar.open("Account opened successfully!", "OK",
+    this._snackBar.open("Account opened successfully! Reloading...", "OK",
       {
         duration: this.successSnackbarDuration,
         panelClass: ['green-snackbar']
       })
+    setTimeout(function (){
+      window.location.reload();
+    }, 2000)
   }
 
   getAccounts(){
@@ -103,7 +106,6 @@ export class AppComponent implements OnInit {
   }
 
   showTransactions(transactions: TransferModel[]) {
-    console.log(transactions);
     this.dialog.open(TransactionsDialog, {
       width: '1100px',
       data: transactions,

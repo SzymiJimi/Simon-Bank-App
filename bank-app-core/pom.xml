@@ -94,7 +94,7 @@
 						</exclude>
 					</excludes>
 					<excludeDevtools>false</excludeDevtools>
-					<outputDirectory>../spring-app</outputDirectory>
+					<outputDirectory>spring-app</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -1,0 +1,10 @@
+FROM maven:3.8.5 AS build
+COPY bank-app-core/src /home/app/src
+COPY bank-app-core/pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean package
+
+FROM adoptopenjdk/openjdk13
+COPY --from=build /home/app/spring-app/bank-app-core.jar bank-app-core.jar
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar","bank-app-core.jar"]
