@@ -9,3 +9,6 @@ and then open in you browser:
 ```
 localhost:80
 ```
+### Entity diagram:
+
+![alt text](entity-diagram.png)
